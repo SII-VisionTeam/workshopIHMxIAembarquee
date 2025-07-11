@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IHM'25 - Atelier IA embarquée</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* CSS variables based on the guidelines */
+        :root {
+            --primary-blue: #004278;
+            --secondary-blue: #5d94d0;
+            --accent-green: #097f03;
+            --accent-purple: #7c08a3;
+            --accent-magenta: #da227a;
+            --accent-red: #d30012;
+            --background-white: #ffffff;
+            --text-dark: #212529;
+            --background-light-gray: #f8f9fa;
+            --background-pastel-blue: #b8d1ec75;
+            --background-pastel-yellow: #ffeb7a75;
+            --background-pastel-gray: #d3d3d329;
+        }
+
+        /* General Body Styling */
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            color: var(--text-dark);
+            /* Removed background image from body */
+            background-color: var(--background-white);
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Container for centered content */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Lato', sans-serif;
+            font-weight: 900; /* Lato Black */
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 72px;
+            color: var(--background-white);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        h2 {
+            font-size: 48px;
+            color: var(--primary-blue);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h3 {
+            font-weight: 700; /* Lato Bold */
+            font-size: 28px;
+            color: var(--primary-blue);
+        }
+        
+        strong {
+            font-weight: 700; /* Lato Bold */
+        }
+
+        em, i {
+            font-style: italic; /* Lato Italic */
+        }
+		
+		.objective-card strong {
+			color: #5D94D0; 
+		}
+
+        /* Main Header */
+        .main-header {
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-blue);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+
+        .main-header .logo img {
+            height: 50px;
+        }
+
+        .main-header nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .main-header nav a {
+            text-decoration: none;
+            color: var(--background-white);
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .main-header nav a:hover {
+            color: var(--secondary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            /* Changed background to solid primary blue */
+            background-color: var(--primary-blue);
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--background-white);
+            padding: 2rem;
+        }
+
+        .hero .subtitle {
+            font-size: 37px;
+            font-weight: 700; /* Lato Bold */
+            margin: 1rem 0;
+             text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+        }
+
+        .hero .date-location {
+            font-size: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background-color: var(--secondary-blue);
+            color: var(--background-white);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 20px;
+            border: 2px solid var(--background-white);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--background-white);
+            color: var(--secondary-blue);
+        }
+
+        /* General Section Styling */
+        .section {
+            padding: 6rem 0;
+            /* Restored solid background colors */
+            background-color: var(--background-white);
+        }
+        
+        /* Updated background for the program section */
+        #programme.section.light-gray-bg {
+             background-color: var(--primary-blue);
+        }
+        
+        /* Title color for the program section */
+        #programme h2 {
+            color: var(--background-white);
+        }
+
+
+        /* Objective Section */
+        .objective-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .objective-card {
+            background-color: var(--background-light-gray);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: -10px 10px 30px rgba(93, 148, 208, 0.2);
+			border: 0.5px solid rgba(0,66,120,0.2);
+        }
+        
+        .objective-card p {
+            text-align: justify;
+        }
+
+        .objective-visuals {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .objective-icons {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .objective-icons .icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 40px; /* Placeholder for actual icons */
+        }
+        
+        .objective-keywords {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        .objective-keywords li {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            font-size: 30px;
+            margin-bottom: 1rem;
+        }
+		
+		.icon img {
+			width: 60%;
+			height: 60%;
+			object-fit: contain;
+		}
+
+        .keyword-green { color: var(--accent-green); }
+        .keyword-purple { color: var(--accent-purple); }
+        .keyword-red { color: var(--accent-red); }
+        .keyword-magenta { color: var(--accent-magenta); }
+
+        /* Program Section */
+        .program-card {
+            background: var(--background-white);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .program-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .program-list li {
+            display: grid; /* Using grid for robust alignment */
+            grid-template-columns: 90px 1fr;
+            align-items: baseline;
+            gap: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .program-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .program-list .time {
+            font-weight: 700;
+            color: var(--secondary-blue);
+            font-size: 20px;
+        }
+        
+        .program-list .highlight {
+            background-color: var(--background-pastel-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: -1rem; /* Adjust margin to align with grid */
+        }
+
+        /* Participate Section */
+        .participate-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .step-card {
+            background-color: var(--background-pastel-blue);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(93, 148, 208, 0.2);
+            text-align: center;
+			border: 0.5px solid rgba(0,66,120,0.2);
+        }
+        
+        .step-card h4 {
+            color: var(--primary-blue);
+            font-size: 24px;
+        }
+        
+        .step-card .btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background-color 0.3s;
+        }
+        
+        .step-card .btn:hover {
+            background-color: var(--secondary-blue);
+        }
+        
+        .step-card img {
+            height: 80px;
+            margin-top: 1rem;
+        }
+
+        .submission-card {
+            background-color: var(--background-pastel-yellow);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(255, 200, 0, 0.3);
+            margin-bottom: 4rem;
+			border: 0.5px solid rgba(0,66,120,0.2);
+        }
+        
+        .themes-card {
+            background-color: var(--background-pastel-gray);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+			border: 0.5px solid rgba(0,66,120,0.2);
+        }
+        
+        .submission-card ul, .themes-card ul {
+            padding-left: 20px;
+        }
+        
+        .submission-card ul li, .themes-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Organizer Section */
+        .organizer-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .organizer-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .organizer-grid .sii-logo img {
+            height: 150px;
+        }
+        
+        .organizer-theme h4 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+        
+        .organizer-theme .hashtags {
+            font-style: italic;
+        }
+        
+        .organizer-theme.green h4, .organizer-theme.green .icon {
+            color: var(--accent-green);
+        }
+		
+		.organizer-theme.green p, .organizer-theme.green .icon {
+            color: var(--accent-green);
+        }
+		
+		.organizer-theme.green .hashtags, .organizer-theme.green .icon {
+            color: var(--accent-green);
+        }
+        
+        .organizer-theme.magenta h4, .organizer-theme.magenta .icon {
+            color: var(--accent-magenta);
+        }
+		
+		.organizer-theme.magenta p, .organizer-theme.magenta .icon {
+            color: var(--accent-magenta);
+        }
+		
+		.organizer-theme.magenta .hashtags, .organizer-theme.magenta .icon {
+            color: var(--accent-magenta);
+        }
+        
+        .organizer-theme .icon img {
+            height: 100px;
+        }
+
+        .animators-card {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+        }
+        
+        .animators-card h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .animators-card p {
+            margin: 0;
+            line-height: 1.8;
+        }
+        
+        .animators-card a {
+            color: var(--secondary-blue);
+            text-decoration: none;
+        }
+        .animators-card a:hover {
+            text-decoration: underline;
+        }
+		
+		.submission-card p {
+			text-align: justify;
+		}
+
+        /* Conference Section */
+        .conference-text {
+            text-align: justify;
+            max-width: 900px;
+            margin: 0 auto 4rem auto;
+        }
+        
+        .conference-text a {
+            color: var(--secondary-blue);
+            font-weight: 700;
+        }
+
+        .partners-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+			margin: 30px;
+        }
+        
+        .partners-grid img {
+            max-height: 60px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        
+        .partners-grid img:hover {
+            filter: none;
+            opacity: 1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .objective-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 992px) {
+            h1 { font-size: 56px; }
+            h2 { font-size: 40px; }
+            .hero { height: auto; padding: 4rem 1rem; }
+            .participate-steps {
+                grid-template-columns: 1fr;
+            }
+            .organizer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .main-header nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Section 1: Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="#"><img src="assets/images/Logo.png" alt="SII Research Logo"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#objectif">Objectifs</a></li>
+                    <li><a href="#programme">Programme</a></li>
+                    <li><a href="#participer">Participer</a></li>
+                    <li><a href="#organisateur">Organisateurs</a></li>
+                    <li><a href="#conference">La conférence</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 2: Hero (Main Title) -->
+        <section class="hero">
+            <h1>IHM'25 - Atelier IA embarquée</h1>
+            <p class="subtitle">Les systèmes IA embarqués : réinventer la collaboration numérique</p>
+            <p class="date-location">03 Novembre 2025 à la Cité, Toulouse</p>
+            <a href="#participer" class="cta-button">Participer à l'atelier</a>
+        </section>
+
+        <!-- Section 3: Objective of the Workshop -->
+        <section id="objectif" class="section">
+            <div class="container">
+                <h2>Objectif de l'atelier</h2>
+                <div class="objective-grid">
+                    <div class="objective-card">
+						<p>Sur une demi-journée, plongeons ensemble dans un futur où l’<strong>IA embarquée</strong> réinvente nos <strong>façons d’interagir </strong>avec les machines mais aussi entre nous.</p>
+						<p>Les présentations et échanges mettront en lumière des <strong>technologies qui font dialoguer intelligence humaine et artificielle</strong> afin d’imaginer des environnements plus <strong>fluides</strong>, <strong>sécurisés</strong> et <strong>durables</strong>.</p>
+                    </div>
+                    <div class="objective-visuals">
+                        <div class="objective-icons">
+                            <div class="icon">
+								<img src="assets\images\systeme-embarque.png" alt="Systèmes embarqués">
+							</div>
+                            <div class="icon">
+								<img src="assets\images\ia.png" alt="intelligence artificielle">
+							</div>
+                            <div class="icon">
+								<img src="assets\images\connexion.png" alt="connexion">
+							</div>
+                        </div>
+                        <ul class="objective-keywords">
+                            <li class="keyword-green">IA embarquée</li>
+                            <li class="keyword-purple">Collaboration numérique</li>
+                            <li class="keyword-red">Interopérabilité</li>
+                            <li class="keyword-magenta">Multimodalité</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Workshop Program -->
+        <section id="programme" class="section light-gray-bg">
+            <div class="container">
+                <h2>Programme de l'atelier</h2>
+                <div class="program-card">
+                    <ul class="program-list">
+                        <li><time class="time">09h00</time> <span>Accueil des participants & café</span></li>
+                        <li><time class="time">09h30</time> <span>Mot d'accueil et présentation de l'atelier</span></li>
+                        <li><time class="time">10h00</time> <span>Présentation 1 : Titre à venir</span></li>
+						<li><time class="time">10h15</time> <span>Présentation 2 : Titre à venir</span></li>
+                        <li><time class="time">10h30</time> <span>Présentation 3 : Titre à venir</span></li>
+                        <li><time class="time">10h45</time> <span>Pause & Networking</span></li>
+                        <li><time class="time">11h15</time> <span>Présentation 4 : Titre à venir</span></li>
+						<li><time class="time">11h30</time> <span>Présentation 5 : Titre à venir</span></li>
+                        <li><time class="time">11h45</time> <span>Présentation 6 : Titre à venir</span></li>
+                        <li><time class="time">12h00</time> <span>Table ronde : Sujet à venir</span></li>
+                        <li><time class="time">12h30</time> <span>Fin de l'atelier</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: How to Participate -->
+        <section id="participer" class="section">
+            <div class="container">
+                <h2>Participer à l'atelier</h2>
+                <div class="participate-steps">
+                    <div class="step-card">
+                        <h4>ÉTAPE 1 (obligatoire)</h4>
+                        <p>S’inscrire à la session <strong>"Atelier et GT"</strong> (ou à l'entierté de la conférence IHM) et choisir notre atelier.</p>
+                        <a href="https://ihm2025.afihm.org/?inscriptions" class="btn">S'inscrire</a>
+                    </div>
+                    <div class="step-card">
+                        <h4>ÉTAPE 2 (non obligatoire)</h4>
+                        <p>Soumettre une présentation par mail avant le <strong>19 septembre 2025 à minuit</strong>.</p>
+                        <a href="mailto:alexandre.agossah@sii.fr" class="btn">Soumettre une présentation</a>
+                    </div>
+                    <div class="step-card">
+                        <h4>ÉTAPE 3</h4>
+                        <p>Rejoignez-nous à <strong>La Cité - Toulouse</strong> pour une sessoin d'échanges et de découvertes.</p>
+                        <img src="assets/images/logo-cite-vertical-bk.png" alt="La Cité Toulouse">
+                    </div>
+                </div>
+
+                <div class="submission-card">
+                    <h3>Modalités de soumission</h3>
+                    <p>✓    Les présentations, d’une durée de <strong>15 minutes</strong>, porteront sur des recherches (en cours ou terminées), des outils existants, des innovations, des initiatives en lien avec l’<strong>IA embarquée</strong>. Elles pourront se faire en <strong>français</strong> ou en <strong>anglais</strong>.</p>
+                    <p>✓    Vous devez proposer <strong>1 page</strong> (références exclues) comprenant un <strong>titre</strong>, les <strong>auteurs</strong>, leurs <strong>affiliations</strong> et un <strong>résumé de la présentation</strong>, au <strong>format de la conférence</strong>, avant le <strong>19 septembre 2025 à minuit</strong>.</p>
+                    <p>✓    Vous serez notifiés de son acceptation le <strong>26 septembre 2025</strong>.</p>
+                    <p>✓    Vous devrez envoyer votre <strong>résumé</strong> et <strong>support de présentation finaux</strong> avant le <strong>03 octobre 2025 à minuit</strong>.</p>
+                    <p>✓    Pour celles et ceux qui le souhaitent, les résumés seront publiés sur <strong>Arxiv</strong>.</p>
+                </div>
+
+                <div class="themes-card">
+                    <h3>Exemples de thématiques pouvant être abordées</h3>
+                    <ul>
+                        <li>Interfaces utilisant l’IA embarquée en contexte mobile ou contraint.</li>
+                        <li>Interactions humain-environnement augmentées (objets connectés, contextes intelligents).</li>
+                        <li>Impacts de l’IA embarquée sur la collaboration et les dynamiques collectives.</li>
+                        <li>Impacts de l’IA embarquée sur l’expérience utilisateur, la charge cognitive ou la confiance.</li>
+                        <li>Méthodes d'observation et d’analyse des interactions en présence de technologies intelligentes.</li>
+                        <li>Usages émergents et détournements d’objets intégrant de l’IA (dans l’espace public ou privé).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Organizer -->
+        <section id="organisateur" class="section light-gray-bg">
+            <div class="container">
+                <h2>Organisateur de l'atelier</h2>
+                <p class="organizer-intro">Depuis 2010, le <strong>Groupe SII</strong> mène des actions de <strong>Recherche & Développement</strong>, à la croisée des <strong>enjeux technologiques</strong>, <strong>industriels</strong> et <strong>sociétaux</strong>. Autonome ou en partenariat, notre démarche vise à développer et expérimenter des <strong>technologies à impact</strong>, en phase avec les <strong>grandes transformations de demain</strong>. Nous concevons des solutions porteuses de sens, à la fois pour nos clients et pour la société.</p>
+                
+                <div class="organizer-grid">
+                    <div class="organizer-theme green">
+                        <div class="icon">
+                            <img src="assets/images/hydrogene.png" alt="transport du futur">
+                        </div>
+                        <h4>Transport du Futur</h4>
+						<p>Rendre les transports plus sûrs, accessibles, </br>autonomes et écoresponsables.</p>
+                        <div class="hashtags">#DataIA #Ecoconception #IHM #Décarbonation</div>
+                    </div>
+                    <div class="sii-logo">
+                        <img src="assets/images/logoSII OK-RVB-sans_fond.png" alt="SII Logo">
+                    </div>
+                    <div class="organizer-theme magenta">
+                        <div class="icon">
+                            <img src="assets/images/ville-verte.png" alt="ville du futur">
+                        </div>
+                        <h4>Ville du Futur</h4>
+						<p>Rendre les territoires plus connectés, </br> inclusifs et durables.</p>
+                        <div class="hashtags">#DataIA #DéveloppementEmbarqué #Cloud #ComputerVision</div>
+                    </div>
+                </div>
+
+                <div class="animators-card">
+                    <h3>Animateurs de l'atelier : SII Research</h3>
+                    <p>
+                        <strong>Alexandre AGOSSAH</strong>, <em>Docteur en Interactions Humains-Machine, SII Research</em> - <a href="mailto:alexandre.agossah@sii.fr">alexandre.agossah@sii.fr</a><br>
+                        <strong>Louise DEVILLIERS-REOLON</strong>, <em>Docteure en Facteurs Humains, SII Research</em> - <a href="mailto:louise.devillers-reolon@sii.fr">louise.devillers-reolon@sii.fr</a><br>
+                        <strong>Maryam BOUDJAA</strong>, <em>Consultante R&D, SII Research</em> - <a href="mailto:maryam.boudjaa@sii.fr">maryam.boudjaa@sii.fr</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: IHM'25 Conference and Partners -->
+        <section id="conference" class="section">
+            <div class="container">
+                <h2>Conférence IHM'25</h2>
+                <p class="conference-text">
+                    La <strong>conférence IHM ’25</strong>, soutenue par l’AFIHM, rassemble les avancées en recherche, développement et innovation en <strong>interactions humain-machine</strong>. Cette édition met un accent particulier sur la collaboration, tout en accueillant l’ensemble des thématiques phares de la communauté IHM. C’est dans cette optique que s’inscrit notre <strong>atelier</strong>, en résonance avec les <strong>enjeux collaboratifs</strong> et <strong>interdisciplinaires</strong> portés par cette édition. Pour plus d'informations sur la conférence principale, les inscriptions et le programme complet, veuillez consulter le <a href="https://ihm2025.afihm.org/" target="_blank">site web officiel de IHM'25</a>.
+                </p>
+                <div class="partners-grid">
+                    <img src="assets/images/logo-afihm_2.png" alt="AFIHM Logo">
+                    <img src="assets/images/logo-sigchi.png" alt="SIGCHI Logo">
+                    <img src="assets/images/logo-acm.png" alt="ACM In-Cooperation Logo">
+                    <img src="assets/images/logo_enac.png" alt="ENAC Logo">
+                </div>
+				<div class="partners-grid">
+                    <img src="assets/images/logo-region.png" alt="Region Occitanie Logo">
+                    <img src="assets/images/univ_toulouse.png" alt="Université de Toulouse Logo">
+                    <img src="assets/images/logo-cite-vertical-bk.png" alt="La Cité Logo">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
